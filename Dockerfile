@@ -30,7 +30,9 @@ COPY README.md /bookkeeper/src/README.md
 
 WORKDIR /bookkeeper/src
 #RUN mvn dependency:go-offline && \
-RUN mvn clean install --batch-mode -pl '!tests' -DskipTests=true
+#RUN mvn clean install --batch-mode -pl '!tests' -DskipTests=true
+#RUN mvn -pl bookkeeper clean package -DskipTests
+RUN mvn -pl :bookkeeper-dist-server clean package -DskipTests
 
 # The image is based on the master branch
 FROM apache/bookkeeper:latest
