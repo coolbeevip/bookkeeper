@@ -29,8 +29,8 @@ COPY NOTICE /bookkeeper/src/NOTICE
 COPY README.md /bookkeeper/src/README.md
 
 WORKDIR /bookkeeper/src
-RUN mvn dependency:go-offline && \
-    mvn clean install --batch-mode -DskipTests=true
+#RUN mvn dependency:go-offline && \
+RUN mvn clean install --batch-mode -pl '!tests' -DskipTests=true
 
 # The image is based on the master branch
 FROM apache/bookkeeper:latest
