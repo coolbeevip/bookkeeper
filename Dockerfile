@@ -29,7 +29,7 @@ COPY NOTICE /bookkeeper/src/NOTICE
 COPY README.md /bookkeeper/src/README.md
 
 WORKDIR /bookkeeper/src
-#RUN mvn dependency:go-offline && \
+RUN mvn dependency:go-offline
 #RUN mvn clean install --batch-mode -pl '!tests' -DskipTests=true
 #RUN mvn -pl bookkeeper clean package -DskipTests
 RUN mvn -pl :bookkeeper-dist-server clean package -DskipTests
@@ -40,7 +40,7 @@ FROM apache/bookkeeper:latest
 ARG BK_VERSION=4.11.0
 ARG DISTRO_NAME=bookkeeper-server-${BK_VERSION}-SNAPSHOT-bin
 
-COPY --from=build /bookkeeper/src/bookkeeper-dist/server/${DISTRO_NAME}.tar.gz /opt
+COPY --from=build /bookkeeper/src/bookkeeper-dist/server/target/${DISTRO_NAME}.tar.gz /opt
 COPY --from=build /bookkeeper/src/docker/scripts /opt/bookkeeper/scripts
 
 RUN set -x \
