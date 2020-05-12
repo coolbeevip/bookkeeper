@@ -39,17 +39,17 @@ RUN mvn -pl :bookkeeper-dist-server clean package -DskipTests
 FROM apache/bookkeeper:latest
 
 ARG BK_VERSION=4.11.0
-ARG DISTRO_NAME=bookkeeper-server-${BK_VERSION}-SNAPSHOT-bin
+ARG DISTRO_NAME=bookkeeper-server-${BK_VERSION}-SNAPSHOT
 
-COPY --from=build /bookkeeper/src/bookkeeper-dist/server/target/${DISTRO_NAME}.tar.gz /opt
+COPY --from=build /bookkeeper/src/bookkeeper-dist/server/target/${DISTRO_NAME}-bin.tar.gz /opt
 COPY --from=build /bookkeeper/src/docker/scripts/ /opt/bookkeeper/scripts/
 
 RUN set -x \
     && cd /opt \
     && rm -rf /opt/bookkeeper \
-    && tar -xzf "$DISTRO_NAME.tar.gz" \
-    && mv bookkeeper-server-${BK_VERSION}/ /opt/bookkeeper/ \
-    && rm -rf "$DISTRO_NAME.tar.gz" \
+    && tar -xzf "$DISTRO_NAME-bin.tar.gz" \
+    && mv /opt/${DISTRO_NAME}/ /opt/bookkeeper/ \
+    && rm -rf "$DISTRO_NAME-bin.tar.gz" \
     && chmod +x -R /opt/bookkeeper/scripts/
 
 WORKDIR /opt/bookkeeper
