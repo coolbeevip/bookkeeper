@@ -15,6 +15,7 @@ COPY conf/ /bookkeeper/src/conf/
 COPY cpu-affinity/ /bookkeeper/src/cpu-affinity/
 COPY deploy/ /bookkeeper/src/deploy/
 COPY dev/ /bookkeeper/src/dev/
+COPY docker/ /bookkeeper/src/docker/
 COPY metadata-drivers/ /bookkeeper/src/metadata-drivers/
 COPY microbenchmarks/ /bookkeeper/src/microbenchmarks/
 COPY shaded/ /bookkeeper/src/shaded/
@@ -41,7 +42,7 @@ ARG BK_VERSION=4.11.0
 ARG DISTRO_NAME=bookkeeper-server-${BK_VERSION}-SNAPSHOT-bin
 
 COPY --from=build /bookkeeper/src/bookkeeper-dist/server/target/${DISTRO_NAME}.tar.gz /opt
-COPY --from=build /bookkeeper/src/docker/scripts /opt/bookkeeper/scripts
+COPY --from=build /bookkeeper/src/docker/scripts/ /opt/bookkeeper/scripts/
 
 RUN set -x \
     && cd /opt \
