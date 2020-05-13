@@ -44,11 +44,12 @@ ARG DISTRO_NAME=bookkeeper-server-${BK_VERSION}-SNAPSHOT
 COPY --from=build /bookkeeper/src/bookkeeper-dist/server/target/${DISTRO_NAME}-bin.tar.gz /opt
 
 RUN set -x \
+    && yum install bash \
     && rm -rf /opt/bookkeeper \
     && cd /opt \
     && tar -xzf "$DISTRO_NAME-bin.tar.gz" \
-    && mv /opt/${DISTRO_NAME}/ /opt/bookkeeper/ \
-    && rm -rf "$DISTRO_NAME-bin.tar.gz"
+    && mv /opt/${DISTRO_NAME}/ /opt/bookkeeper/
+    #&& rm -rf "$DISTRO_NAME-bin.tar.gz"
 
 COPY --from=build /bookkeeper/src/docker/scripts/ /opt/bookkeeper/scripts/
 
